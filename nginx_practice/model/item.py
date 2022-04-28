@@ -10,7 +10,6 @@ class Item(BaseModel):
     tax: float | None = None
     tags: list = []
 
-    @classmethod
     @validator("name")
     def validate_name(cls, v: str):
         if not v.isalpha():

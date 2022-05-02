@@ -12,10 +12,13 @@ RUN mkdir -p ${PROJECT_DIR}
 WORKDIR ${PROJECT_DIR}
 COPY . .
 
-# TODO : nginx conf 관련 설정 추가
+RUN  rm -rf /etc/nginx/nginx.conf \
+     && rm -rf /etc/nginx/sites-enabled/* \
+     && mv  ${PROJECT_DIR}/docker/nginx.conf /etc/nginx/nginx.conf \
+     && mv  ${PROJECT_DIR}/docker/nginx.conf /etc/nginx/sites-enabled/
 
 RUN pipenv install --system --deploy
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["gunicorn", "-c", "nginx_practice/gunicorn.conf.py"]
